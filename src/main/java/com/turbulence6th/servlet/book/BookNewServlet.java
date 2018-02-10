@@ -23,6 +23,7 @@ public class BookNewServlet extends BookServlet {
 		try {
 			Book book = this.requestBook(request);
 			if(BookValidator.validate(book) && this.bookRepository.create(book)) {
+				this.broadcastAdd(this.bookIndexSessions, gson, book);
 				response.sendRedirect("/books");
 			}
 			

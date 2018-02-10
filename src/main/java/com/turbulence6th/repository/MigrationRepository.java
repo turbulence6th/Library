@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 
 public class MigrationRepository {
 
@@ -129,11 +130,12 @@ public class MigrationRepository {
 	}
 	
 	private void registerMigration(int migrationId, String name) {
-		String sql = "INSERT INTO migrations (migration_id, name) VALUES (?, ?)";
+		String sql = "INSERT INTO migrations (migration_id, name, created_at) VALUES (?, ?, ?)";
 		try (PreparedStatement statement = this.connection.prepareStatement(sql)) {
 			
 			statement.setInt(1, migrationId);
 			statement.setString(2, name);
+			statement.setObject(3, LocalDateTime.now());
 			
 			System.out.println(statement);
 			

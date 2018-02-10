@@ -2,19 +2,31 @@ package com.turbulence6th.servlet.book;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.Session;
 
 import com.turbulence6th.model.Book;
 import com.turbulence6th.repository.BookRepository;
 import com.turbulence6th.servlet.AbstractServlet;
+import com.turbulence6th.websocket.BookBroadcast;
 
-public abstract class BookServlet extends AbstractServlet {
+public abstract class BookServlet extends AbstractServlet implements BookBroadcast {
 
 	private static final long serialVersionUID = -2399002301004833284L;
 	
 	protected BookRepository bookRepository;
+	
+	protected Set<Session> bookIndexSessions;
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		this.bookRepository = (BookRepository) this.context.getAttribute("bookRepository");
+		this.bookIndexSessions = this.webSocketSessionMap.get("/books");
+	}
 	
 	protected Book requestBook(HttpServletRequest request) {
 		String[] pathParts = request.getRequestURI().split("/");
@@ -70,11 +82,7 @@ public abstract class BookServlet extends AbstractServlet {
 		return null;
 	}
 	
-	@Override
-	public void init() throws ServletException {
-		super.init();
-		this.bookRepository = (BookRepository) this.context.getAttribute("bookRepository");
-	}
+	
 	
 	@Override
 	protected String view() {

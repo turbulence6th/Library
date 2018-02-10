@@ -30,6 +30,8 @@
 		
 		<script type="text/javascript" src="/javascripts/pretty/pretty.js"></script>
 		
+		<script type="text/javascript" src="/javascripts/websocket/websocket.js"></script>
+		
 	</head>
 	<body>
 		<div class="container">

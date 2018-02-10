@@ -5,7 +5,9 @@ CREATE TABLE books
     book_id bigint NOT NULL default nextval('book_id_seq'),
     name character varying(255),
     author character varying(255),
-    publish_date timestamp without time zone,
+    publish_date date,
+    created_at TIMESTAMP without time zone,
+    modified_at TIMESTAMP without time zone,
     PRIMARY KEY (book_id)
 );
 

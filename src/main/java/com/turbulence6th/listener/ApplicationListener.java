@@ -7,12 +7,16 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import javax.websocket.Session;
 
 import com.google.gson.Gson;
 import com.turbulence6th.repository.BookRepository;
@@ -67,6 +71,10 @@ public class ApplicationListener implements ServletContextListener {
 		context.setAttribute("bookRepository", new BookRepository(this.connection));
 
 		context.setAttribute("gson", new Gson());
+		
+		HashMap<String, Set<Session>> webSocketSessionMap = new HashMap<>();
+		webSocketSessionMap.put("/books", new HashSet<>());
+		context.setAttribute("webSocketSessionMap", webSocketSessionMap);
 	}
 	
 	private void initializeConnection() {

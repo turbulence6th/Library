@@ -19,7 +19,7 @@ public class AssetFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
 
-		if (path.startsWith("/javascripts") || path.startsWith("/stylesheets")) {
+		if (path.startsWith("/javascripts") || path.startsWith("/stylesheets") || path.startsWith("/websocket")) {
 		    chain.doFilter(request, response);
 		} else {
 		    request.getRequestDispatcher("/pages" + path).forward(request, response);

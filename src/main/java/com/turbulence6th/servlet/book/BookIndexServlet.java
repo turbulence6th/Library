@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/pages/books")
 public class BookIndexServlet extends BookServlet {
+	
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

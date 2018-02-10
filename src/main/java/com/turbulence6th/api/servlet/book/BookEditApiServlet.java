@@ -30,6 +30,7 @@ public class BookEditApiServlet extends BookApiServlet {
 
 			else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
 				jsonResponse.addProperty("success", true);
+				this.broadcastUpdate(this.bookIndexSessions, gson, book);
 			}
 
 			else {

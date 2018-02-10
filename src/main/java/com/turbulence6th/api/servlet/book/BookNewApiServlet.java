@@ -24,6 +24,7 @@ public class BookNewApiServlet extends BookApiServlet {
 			Book book = requestBook(request);
 			if(BookValidator.validate(book) && this.bookRepository.create(book)) {
 				jsonResponse.addProperty("success", true);
+				this.broadcastAdd(this.bookIndexSessions, gson, book);
 			}
 			
 			else {

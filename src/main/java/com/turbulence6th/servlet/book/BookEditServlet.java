@@ -44,6 +44,7 @@ public class BookEditServlet extends BookServlet {
 			}
 
 			else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
+				this.broadcastUpdate(this.bookIndexSessions, gson, book);
 				response.sendRedirect("/books");
 			}
 

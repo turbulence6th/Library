@@ -1,20 +1,26 @@
 package com.turbulence6th.model;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
-public class Book {
+import com.turbulence6th.annotation.Column;
+import com.turbulence6th.annotation.Id;
+import com.turbulence6th.annotation.Table;
 
+@Table(name = "books")
+public class Book extends Model {
+
+	@Id
+	@Column(name = "book_id")
 	private Long id;
 	
+	@Column(name = "name")
 	private String name;
 	
+	@Column(name = "author")
 	private String author;
 	
+	@Column(name = "publish_date")
 	private LocalDate publishDate;
-	
-	private Map<String, List<String>> errors;
 
 	public Book() {
 		
@@ -33,7 +39,7 @@ public class Book {
 	
 	@Override
 	public String toString() {
-		return String.format("Book[id: %d, name: %s, author: %s, publishDate: %tb]", this.id, this.name, this.author, this.publishDate);
+		return String.format("Book[id: %d, name: %s, author: %s, publishDate: %s]", this.id, this.name, this.author, this.publishDate);
 	}
 
 	public Long getId() {
@@ -68,12 +74,6 @@ public class Book {
 		this.publishDate = publishDate;
 	}
 	
-	public Map<String, List<String>> getErrors() {
-		return errors;
-	}
-
-	public void setErrors(Map<String, List<String>> errors) {
-		this.errors = errors;
-	}
+	
 	
 }

@@ -14,6 +14,11 @@ import com.turbulence6th.model.Book;
 public class BookDeleteApiServlet extends BookApiServlet {
 
 	private static final long serialVersionUID = -4608537495565849016L;
+	
+	@Override
+	public void init() throws ServletException {
+		super.init();
+	}
 
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
@@ -28,6 +33,7 @@ public class BookDeleteApiServlet extends BookApiServlet {
 			}
 			else if (this.bookRepository.delete(book)) {
 				jsonResponse.addProperty("success", true);
+				this.broadcastDelete(this.bookIndexSessions, book.getId());
 			}
 	
 			else {
@@ -42,4 +48,6 @@ public class BookDeleteApiServlet extends BookApiServlet {
 		
 		print(response, jsonResponse);
 	}
+	
+	
 }
