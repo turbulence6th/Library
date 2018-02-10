@@ -42,7 +42,7 @@ public class BookEditServlet extends BookServlet {
 		try {
 			Book book = requestBook(request);
 			if (book == null) {
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Check whether all fields are valid");
+				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
 			}
 
 			else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
