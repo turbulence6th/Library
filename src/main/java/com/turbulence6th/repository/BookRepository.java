@@ -97,7 +97,7 @@ public class BookRepository {
 	
 	public Book findById(Long id) {
 		
-		String sql = "SELECT * FROM books WHERE book_id = ?";
+		String sql = "SELECT * FROM books WHERE book_id = ? LIMIT 1";
 
 		try (PreparedStatement statement = this.connection.prepareStatement(sql)) {
 

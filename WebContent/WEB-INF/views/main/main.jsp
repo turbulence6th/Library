@@ -4,9 +4,15 @@
 
 <ul class="list-group">
 	<li class="list-group-item">List all books: <a href="/books">/books</a></li>
+	<li class="list-group-item">
+  		Get a book: <a href="/books/%BOOK_ID%">/books/%book_id%</a>
+  		<ul>
+  			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
+  		</ul>
+  	</li>
   	<li class="list-group-item">Add a new book: <a href="/books/new">/books/new</a></li>
   	<li class="list-group-item">
-  		Edit a book: <a href="/books/%BOOK_ID%">/books/%book_id%</a>
+  		Edit a book: <a href="/books/edit/%BOOK_ID%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   		</ul>
@@ -33,6 +39,27 @@
 		    ]
 		</code>
 	</li>
+	<li class="list-group-item">
+  		Get a book: GET <a href="/api/books/%book_id%">/books/%book_id%</a>
+  		<ul>
+  			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
+  		</ul>
+  		<code>
+			{
+	        	"success": <i>(boolean)</i>  success_status,
+	        	"book": <i>(Object)</i> {
+	        		"name": <i>(String)</i> "name_of_the_book",
+	        		"author": <i>(String)</i> "author_of_the_book",
+	        		"publishDate": <i>(Object)</i> {
+	        			"year": <i>(int)</i> year,
+	        			"month": <i>(int)</i> month,
+		        		"day": <i>(int)</i> day
+	        		}
+	        	},
+	        	"message": <i>(String)</i> "error_message"
+		    }
+		</code>
+  	</li>
   	<li class="list-group-item">
   		Add a new book: POST <a href="/api/books/new">/books/new</a>
   		<ul>
@@ -52,7 +79,7 @@
 		</code>
   	</li>
   	<li class="list-group-item">
-  		Edit a book: PUT <a href="/api/books/%book_id%">/books/%book_id%</a>
+  		Edit a book: PUT <a href="/api/books/edit/%book_id%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   			<li><b>book[name] <i>(REQ_PARAM)</i>:</b> name of the book</li>
@@ -72,7 +99,7 @@
 		</code>
   	</li>
   	<li class="list-group-item">
-  		Delete a book: DELETE <a href="/api/books/%book_id%">/books</a>
+  		Delete a book: DELETE <a href="/api/books/delete/%book_id%">/books</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   		</ul>

@@ -91,7 +91,7 @@ public class MigrationRepository {
 	}
 	
 	private boolean checkMigrationExists(int migrationId) {
-		String sql = "SELECT 1 FROM migrations WHERE migration_id = ? limit 1";
+		String sql = "SELECT 1 FROM migrations WHERE migration_id = ? LIMIT 1";
 		
 		try(PreparedStatement statement = this.connection.prepareStatement(sql)) {
 			

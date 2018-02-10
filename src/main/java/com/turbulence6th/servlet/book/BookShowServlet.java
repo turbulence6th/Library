@@ -8,42 +8,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.turbulence6th.model.Book;
-import com.turbulence6th.validator.BookValidator;
 
-@WebServlet("/pages/books/new")
-public class BookNewServlet extends BookServlet {
-
-	private static final long serialVersionUID = 6466708297400885178L;
+@WebServlet("/pages/books/*")
+public class BookShowServlet extends BookServlet {	
+		
+	private static final long serialVersionUID = 8655928658895401277L;
 	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.forward(request, response);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Book book = this.requestBook(request);
-			if(BookValidator.validate(book) && this.bookRepository.create(book)) {
-				response.sendRedirect("/books");
+			Book book = requestBook(request);
+			
+			if(book == null) {
+				response.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
 			}
 			
 			else {
 				request.setAttribute("book", book);
 				this.forward(request, response);
 			}
+			
 		} catch(RuntimeException e) {
 			e.printStackTrace();
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Check whether all fields are valid");
+			response.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
 		}
 	}
 	
 	@Override
 	protected String title() {
-		return "New Book";
+		return "Book";
 	}
 	
 	@Override
 	protected String view() {
-		return super.view() + "/new.jsp";
+		return super.view() + "/show.jsp";
 	}
 
 }

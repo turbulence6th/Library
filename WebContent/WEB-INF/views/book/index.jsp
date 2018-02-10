@@ -40,7 +40,7 @@
 			var id = $(this).data().id;
 			var that = this;
 			$.ajax({	
-				url: '/api/books/' + id,
+				url: '/api/books/delete/' + id,
 				type: 'DELETE',
 			   	data: {
 					format: 'json'

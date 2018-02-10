@@ -1,8 +1,6 @@
 package com.turbulence6th.servlet.book;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.turbulence6th.model.Book;
 import com.turbulence6th.validator.BookValidator;
 
-@WebServlet("/pages/books/*")
+@WebServlet("/pages/books/edit/*")
 public class BookEditServlet extends BookServlet {
 
 	private static final long serialVersionUID = -9037745287739869520L;
@@ -57,32 +55,6 @@ public class BookEditServlet extends BookServlet {
 			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Check whether all fields are valid");
 		}
-	}
-
-	private Book requestBook(HttpServletRequest request) {
-		String[] pathParts = request.getRequestURI().split("/");
-
-		if (pathParts.length == 4) {
-
-			Long id = Long.valueOf(pathParts[3]);
-
-			Book book = this.bookRepository.findById(id);
-
-			if (request.getMethod().equals("POST")) {
-				String name = request.getParameter("book[name]").trim().replaceAll(" +", " ");
-				String author = request.getParameter("book[author]").trim().replaceAll(" +", " ");
-				String publishDate = request.getParameter("book[publishDate]");
-
-				book.setName(name);
-				book.setAuthor(author);
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-				book.setPublishDate(LocalDate.parse(publishDate, formatter));
-			}
-
-			return book;
-		}
-
-		return null;
 	}
 
 	@Override

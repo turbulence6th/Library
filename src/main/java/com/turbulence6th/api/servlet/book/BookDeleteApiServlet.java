@@ -9,34 +9,37 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 import com.turbulence6th.model.Book;
-import com.turbulence6th.validator.BookValidator;
 
-@WebServlet("/pages/api/books/new")
-public class BookNewApiServlet extends BookApiServlet {
-	
-	private static final long serialVersionUID = -5132744507814765831L;
+@WebServlet("/pages/api/books/delete/*")
+public class BookDeleteApiServlet extends BookApiServlet {
+
+	private static final long serialVersionUID = -4608537495565849016L;
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		JsonObject jsonResponse = new JsonObject();
 		
 		try {
-			Book book = requestBook(request);
-			if(BookValidator.validate(book) && this.bookRepository.create(book)) {
+			Book book = this.requestBook(request);
+			if (book == null) {
+				jsonResponse.addProperty("success", false);
+				jsonResponse.addProperty("message", "Not found");
+			}
+			else if (this.bookRepository.delete(book)) {
 				jsonResponse.addProperty("success", true);
 			}
-			
+	
 			else {
 				jsonResponse.addProperty("success", false);
-				jsonResponse.add("errors", gson.toJsonTree(book.getErrors()));
 			}
+	
 		} catch(RuntimeException e) {
 			e.printStackTrace();
 			jsonResponse.addProperty("success", false);
 			jsonResponse.addProperty("message", "Check whether all fields are valid");
 		}
 		
-		this.print(response, jsonResponse);
+		print(response, jsonResponse);
 	}
-	
 }
