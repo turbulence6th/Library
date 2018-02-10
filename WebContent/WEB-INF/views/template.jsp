@@ -29,6 +29,8 @@
 		
 	</head>
 	<body>
-		<jsp:include page="${page}" flush="true" />
+		<div class="container">
+			<jsp:include page="${page}" flush="true" />
+		</div>
 	</body>
 </html>

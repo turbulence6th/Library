@@ -18,7 +18,7 @@ public class BookNewServlet extends BookServlet {
 	private static final long serialVersionUID = 6466708297400885178L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		super.doGet(request, response);
+		this.forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,7 +29,7 @@ public class BookNewServlet extends BookServlet {
 		
 		else {
 			request.setAttribute("book", book);
-			super.doPost(request, response);
+			this.forward(request, response);
 		}
 	}
 	

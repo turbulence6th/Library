@@ -14,7 +14,7 @@ public class BookIndexServlet extends BookServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setAttribute("books", this.bookRepository.getBooks());
-		super.doGet(request, response);
+		this.forward(request, response);
 	}
 
 	@Override

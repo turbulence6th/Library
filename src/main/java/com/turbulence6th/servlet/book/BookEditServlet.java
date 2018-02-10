@@ -28,7 +28,7 @@ public class BookEditServlet extends BookServlet {
 
 		else {
 			request.setAttribute("book", book);
-			super.doGet(request, response);
+			this.forward(request, response);
 		}
 	}
 
@@ -46,7 +46,7 @@ public class BookEditServlet extends BookServlet {
 
 		else {
 			request.setAttribute("book", book);
-			super.doGet(request, response);
+			this.forward(request, response);
 		}
 	}
 	

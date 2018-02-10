@@ -35,23 +35,7 @@ public abstract class AbstractServlet extends HttpServlet {
 		this.gson = (Gson) this.context.getAttribute("gson");
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.forward(request, response);
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.forward(request, response);
-	}
-	
-	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.forward(request, response);
-	}
-	
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.forward(request, response);
-	}
-	
-	private void forward(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void forward(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("title", title());
 		request.setAttribute("page", "/WEB-INF/views" + view());
 		request.getRequestDispatcher("/WEB-INF/views/template.jsp").forward(request, response);

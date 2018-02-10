@@ -20,7 +20,7 @@ public class BookValidator {
 			errors.merge("name", createList("Use alpha numeric characters , (') (-) or (:)"), BookValidator::mergeList);
 		}
 		
-		if(name.length() < 3 || name.length() > 25) {
+		if(name.length() < 3 || name.length() > 100) {
 			errors.merge("name", createList("Length must be in 3 and 25"), BookValidator::mergeList);
 		}
 		
@@ -30,7 +30,7 @@ public class BookValidator {
 			errors.merge("author", createList("Use alphabatic characters or (')"), BookValidator::mergeList);
 		} 
 		
-		if(author.length() < 3 || author.length() > 25) {
+		if(author.length() < 3 || author.length() > 100) {
 			errors.merge("author", createList("Length must be in 3 and 25"), BookValidator::mergeList);
 		}
 		
