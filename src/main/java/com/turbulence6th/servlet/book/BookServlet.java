@@ -31,7 +31,7 @@ public abstract class BookServlet extends AbstractServlet {
 		/**
 		 * BookNewServlet
 		 */
-		if(request.getMethod().equals("POST") && pathParts.length == 4) {
+		else if(request.getMethod().equals("POST") && pathParts.length == 4) {
 			String name = request.getParameter("book[name]").trim().replaceAll(" +", " ");
 	        String author = request.getParameter("book[author]").trim().replaceAll(" +", " ");
 	        String publishDate = request.getParameter("book[publishDate]");
@@ -42,20 +42,27 @@ public abstract class BookServlet extends AbstractServlet {
 		/**
 		 * BookEditServlet
 		 */
-		if ((request.getMethod().equals("GET") || request.getMethod().equals("POST")) && pathParts.length == 5) {
+		else if(request.getMethod().equals("GET") && pathParts.length == 5) {
+			Long id = Long.valueOf(pathParts[4]);
+			Book book = this.bookRepository.findById(id);
+			return book;
+		}
+		
+		/**
+		 * BookEditServlet
+		 */
+		else if (request.getMethod().equals("POST") && pathParts.length == 5) {
 			Long id = Long.valueOf(pathParts[4]);
 			Book book = this.bookRepository.findById(id);
 
-			if (request.getMethod().equals("POST")) {
-				String name = request.getParameter("book[name]").trim().replaceAll(" +", " ");
-				String author = request.getParameter("book[author]").trim().replaceAll(" +", " ");
-				String publishDate = request.getParameter("book[publishDate]");
+			String name = request.getParameter("book[name]").trim().replaceAll(" +", " ");
+			String author = request.getParameter("book[author]").trim().replaceAll(" +", " ");
+			String publishDate = request.getParameter("book[publishDate]");
 
-				book.setName(name);
-				book.setAuthor(author);
-				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-				book.setPublishDate(LocalDate.parse(publishDate, formatter));
-			}
+			book.setName(name);
+			book.setAuthor(author);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+			book.setPublishDate(LocalDate.parse(publishDate, formatter));
 
 			return book;
 		}
