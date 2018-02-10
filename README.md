@@ -4,7 +4,7 @@
 	<li class="list-group-item">List all books: <a href="https://library-turbulence6th.herokuapp.com/books">/books</a></li>
   	<li class="list-group-item">Add a new book: <a href="https://library-turbulence6th.herokuapp.com/books/new">/books/new</a></li>
   	<li class="list-group-item">
-  		Edit a book: <a href="https://library-turbulence6th.herokuapp.com/books/%BOOK_ID%">books/%book_id%</a>
+  		Edit a book: <a href="https://library-turbulence6th.herokuapp.com/books/%BOOK_ID%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   		</ul>
