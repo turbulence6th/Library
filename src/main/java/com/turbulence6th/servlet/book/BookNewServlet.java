@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.turbulence6th.model.Book;
 import com.turbulence6th.validator.BookValidator;
 
-@WebServlet("/books/new")
+@WebServlet("/pages/books/new")
 public class BookNewServlet extends BookServlet {
 
 	private static final long serialVersionUID = 6466708297400885178L;

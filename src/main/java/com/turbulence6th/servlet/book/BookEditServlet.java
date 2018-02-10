@@ -13,7 +13,7 @@ import com.google.gson.JsonObject;
 import com.turbulence6th.model.Book;
 import com.turbulence6th.validator.BookValidator;
 
-@WebServlet("/books/*")
+@WebServlet("/pages/books/*")
 public class BookEditServlet extends BookServlet {
 
 	private static final long serialVersionUID = -9037745287739869520L;

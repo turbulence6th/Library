@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.turbulence6th.servlet.AbstractServlet;
 
-@WebServlet("/")
+@WebServlet("/pages/")
 public class MainServlet extends AbstractServlet {
 
 	private static final long serialVersionUID = 793116294545564282L;

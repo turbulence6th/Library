@@ -25,6 +25,7 @@ public class ApplicationListener implements ServletContextListener {
 	
 	private Connection connection;
 
+	@Override
 	public void contextDestroyed(ServletContextEvent event) {
 		try {
 			this.connection.close();
@@ -33,6 +34,7 @@ public class ApplicationListener implements ServletContextListener {
 		}
 	}
 
+	@Override
 	public void contextInitialized(ServletContextEvent event) {
 		ServletContext context = event.getServletContext();
 

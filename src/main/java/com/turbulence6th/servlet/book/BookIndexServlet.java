@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/books")
+@WebServlet("/pages/books")
 public class BookIndexServlet extends BookServlet {
 	private static final long serialVersionUID = 1L;
 
