@@ -22,14 +22,19 @@ public class BookNewServlet extends BookServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Book book = this.requestBook(request);
-		if(BookValidator.validate(book) && this.bookRepository.create(book)) {
-			response.sendRedirect("/books");
-		}
-		
-		else {
-			request.setAttribute("book", book);
-			this.forward(request, response);
+		try {
+			Book book = this.requestBook(request);
+			if(BookValidator.validate(book) && this.bookRepository.create(book)) {
+				response.sendRedirect("/books");
+			}
+			
+			else {
+				request.setAttribute("book", book);
+				this.forward(request, response);
+			}
+		} catch(RuntimeException e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Check whether all fields are valid");
 		}
 	}
 	

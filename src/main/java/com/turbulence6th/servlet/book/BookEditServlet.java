@@ -20,32 +20,42 @@ public class BookEditServlet extends BookServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Book book = requestBook(request);
-		if (book == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-		}
+		try {
+			Book book = requestBook(request);
+			if (book == null) {
+				response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			}
 
-		else {
-			request.setAttribute("book", book);
-			this.forward(request, response);
+			else {
+				request.setAttribute("book", book);
+				this.forward(request, response);
+			}
+		} catch(RuntimeException e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Book book = requestBook(request);
-		if (book == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-		}
+		try {
+			Book book = requestBook(request);
+			if (book == null) {
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Check whether all fields are valid");
+			}
 
-		else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
-			response.sendRedirect("/books");
-		}
+			else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
+				response.sendRedirect("/books");
+			}
 
-		else {
-			request.setAttribute("book", book);
-			this.forward(request, response);
+			else {
+				request.setAttribute("book", book);
+				this.forward(request, response);
+			}
+		} catch(RuntimeException e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Check whether all fields are valid");
 		}
 	}
 

@@ -21,42 +21,57 @@ public class BookEditApiServlet extends BookApiServlet {
 	@Override
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Book book = requestBook(request);
 		JsonObject jsonResponse = new JsonObject();
-		if (book == null) {
+		
+		try {
+			Book book = requestBook(request);
+			if (book == null) {
+				jsonResponse.addProperty("success", false);
+				jsonResponse.addProperty("message", "Not found");
+			}
+
+			else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
+				jsonResponse.addProperty("success", true);
+			}
+
+			else {
+				jsonResponse.addProperty("success", false);
+				jsonResponse.add("errors", gson.toJsonTree(book.getErrors()));
+			}
+
+		} catch(RuntimeException e) {
+			e.printStackTrace();
 			jsonResponse.addProperty("success", false);
-			jsonResponse.addProperty("message", "Not found");
+			jsonResponse.addProperty("message", "Check whether all fields are valid");
 		}
-
-		else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
-			jsonResponse.addProperty("success", true);
-		}
-
-		else {
-			jsonResponse.addProperty("success", false);
-			jsonResponse.add("errors", gson.toJsonTree(book.getErrors()));
-		}
-
+		
 		this.print(response, jsonResponse);
 	}
 
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Book book = requestBook(request);
 		JsonObject jsonResponse = new JsonObject();
-		if (book == null) {
+		
+		try {
+			Book book = requestBook(request);
+			if (book == null) {
+				jsonResponse.addProperty("success", false);
+				jsonResponse.addProperty("message", "Not found");
+			}
+			else if (this.bookRepository.delete(book)) {
+				jsonResponse.addProperty("success", true);
+			}
+	
+			else {
+				jsonResponse.addProperty("success", false);
+			}
+	
+		} catch(RuntimeException e) {
 			jsonResponse.addProperty("success", false);
-			jsonResponse.addProperty("message", "Not found");
+			jsonResponse.addProperty("message", "Check whether all fields are valid");
 		}
-		else if (this.bookRepository.delete(book)) {
-			jsonResponse.addProperty("success", true);
-		}
-
-		else {
-			jsonResponse.addProperty("success", false);
-		}
-
+		
 		print(response, jsonResponse);
 	}
 
@@ -69,7 +84,7 @@ public class BookEditApiServlet extends BookApiServlet {
 
 			Book book = this.bookRepository.findById(id);
 
-			if (request.getMethod().equals("POST")) {
+			if (request.getMethod().equals("PUT")) {
 				String name = request.getParameter("book[name]").trim().replaceAll(" +", " ");
 				String author = request.getParameter("book[author]").trim().replaceAll(" +", " ");
 				String publishDate = request.getParameter("book[publishDate]");

@@ -20,15 +20,22 @@ public class BookNewApiServlet extends BookApiServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Book book = requestBook(request);
 		JsonObject jsonResponse = new JsonObject();
-		if(BookValidator.validate(book) && this.bookRepository.create(book)) {
-			jsonResponse.addProperty("success", true);
-		}
 		
-		else {
+		try {
+			Book book = requestBook(request);
+			if(BookValidator.validate(book) && this.bookRepository.create(book)) {
+				jsonResponse.addProperty("success", true);
+			}
+			
+			else {
+				jsonResponse.addProperty("success", false);
+				jsonResponse.add("errors", gson.toJsonTree(book.getErrors()));
+			}
+		} catch(RuntimeException e) {
+			e.printStackTrace();
 			jsonResponse.addProperty("success", false);
-			jsonResponse.add("errors", gson.toJsonTree(book.getErrors()));
+			jsonResponse.addProperty("message", "Check whether all fields are valid");
 		}
 		
 		this.print(response, jsonResponse);
