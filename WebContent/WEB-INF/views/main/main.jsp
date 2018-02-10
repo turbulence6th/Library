@@ -6,7 +6,7 @@
 	<li class="list-group-item">List all books: <a href="/books">/books</a></li>
   	<li class="list-group-item">Add a new book: <a href="/books/new">/books/new</a></li>
   	<li class="list-group-item">
-  		Edit a book: <a href="books/%BOOK_ID%">books/%book_id%</a>
+  		Edit a book: <a href="/books/%BOOK_ID%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   		</ul>
