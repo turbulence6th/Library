@@ -22,45 +22,40 @@ public class BookEditApiServlet extends BookApiServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Book book = requestBook(request);
+		JsonObject jsonResponse = new JsonObject();
 		if (book == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
+			jsonResponse.addProperty("message", "Not found");
+		}
+
+		else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
+			jsonResponse.addProperty("success", true);
 		}
 
 		else {
-			JsonObject jsonResponse = new JsonObject();
-			if (BookValidator.validate(book) && this.bookRepository.update(book)) {
-				jsonResponse.addProperty("success", true);
-			}
-
-			else {
-				jsonResponse.addProperty("success", false);
-				jsonResponse.add("errors", gson.toJsonTree(book.getErrors()));
-			}
-
-			this.print(response, jsonResponse);
+			jsonResponse.addProperty("success", false);
+			jsonResponse.add("errors", gson.toJsonTree(book.getErrors()));
 		}
+
+		this.print(response, jsonResponse);
 	}
 
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Book book = requestBook(request);
+		JsonObject jsonResponse = new JsonObject();
 		if (book == null) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			jsonResponse.addProperty("message", "Not found");
+		}
+		else if (this.bookRepository.delete(book)) {
+			jsonResponse.addProperty("success", true);
 		}
 
 		else {
-			JsonObject jsonResponse = new JsonObject();
-			if (this.bookRepository.delete(book)) {
-				jsonResponse.addProperty("success", true);
-			}
-
-			else {
-				jsonResponse.addProperty("success", false);
-			}
-
-			print(response, jsonResponse);
+			jsonResponse.addProperty("success", false);
 		}
+
+		print(response, jsonResponse);
 	}
 
 	private Book requestBook(HttpServletRequest request) {

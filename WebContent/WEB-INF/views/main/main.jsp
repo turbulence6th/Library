@@ -66,7 +66,8 @@
 	        		"name": <i>(Array[String])</i> ["name_error", ...],
 	        		"author": <i>(Array[String])</i> ["author_error", ...],
 	        		"publishDate": <i>(Array[String])</i> ["publish_date_error", ...]
-	        	}
+	        	},
+	        	"message": <i>(String)</i> "error_message"
 		    }
 		</code>
   	</li>
@@ -77,7 +78,8 @@
   		</ul>
   		<code>
 			{
-	        	"success": <i>(boolean)</i> success_status
+	        	"success": <i>(boolean)</i> success_status,
+	        	"message": <i>(String)</i> "error_message"
 		    }
 		</code>
   	</li>
