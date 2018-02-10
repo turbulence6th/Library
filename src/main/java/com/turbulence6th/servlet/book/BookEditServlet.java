@@ -32,7 +32,7 @@ public class BookEditServlet extends BookServlet {
 	}
 
 	@Override
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Book book = requestBook(request);
 		if (book == null) {
@@ -82,7 +82,7 @@ public class BookEditServlet extends BookServlet {
 
 			Book book = this.bookRepository.findById(id);
 
-			if (request.getMethod().equals("PUT")) {
+			if (request.getMethod().equals("POST")) {
 				String name = request.getParameter("book[name]");
 				String author = request.getParameter("book[author]");
 				String publishDate = request.getParameter("book[publishDate]");
