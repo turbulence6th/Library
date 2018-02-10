@@ -24,6 +24,7 @@ public class BookEditApiServlet extends BookApiServlet {
 		Book book = requestBook(request);
 		JsonObject jsonResponse = new JsonObject();
 		if (book == null) {
+			jsonResponse.addProperty("success", false);
 			jsonResponse.addProperty("message", "Not found");
 		}
 
@@ -45,6 +46,7 @@ public class BookEditApiServlet extends BookApiServlet {
 		Book book = requestBook(request);
 		JsonObject jsonResponse = new JsonObject();
 		if (book == null) {
+			jsonResponse.addProperty("success", false);
 			jsonResponse.addProperty("message", "Not found");
 		}
 		else if (this.bookRepository.delete(book)) {
