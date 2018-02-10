@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 import com.turbulence6th.model.Book;
+import com.turbulence6th.validator.BookValidator;
 
 @WebServlet("/books/*")
 public class BookEditServlet extends BookServlet {
@@ -39,7 +40,7 @@ public class BookEditServlet extends BookServlet {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		}
 
-		else if (this.bookRepository.update(book)) {
+		else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
 			response.sendRedirect("/books");
 		}
 
@@ -83,8 +84,8 @@ public class BookEditServlet extends BookServlet {
 			Book book = this.bookRepository.findById(id);
 
 			if (request.getMethod().equals("POST")) {
-				String name = request.getParameter("book[name]");
-				String author = request.getParameter("book[author]");
+				String name = request.getParameter("book[name]").trim().replaceAll(" +", " ");
+				String author = request.getParameter("book[author]").trim().replaceAll(" +", " ");
 				String publishDate = request.getParameter("book[publishDate]");
 
 				book.setName(name);

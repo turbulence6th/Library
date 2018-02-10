@@ -34,8 +34,8 @@ public class BookNewServlet extends BookServlet {
 	}
 	
 	private Book requestBook(HttpServletRequest request) {
-		String name = request.getParameter("book[name]");
-        String author = request.getParameter("book[author]");
+		String name = request.getParameter("book[name]").trim().replaceAll(" +", " ");
+        String author = request.getParameter("book[author]").trim().replaceAll(" +", " ");
         String publishDate = request.getParameter("book[publishDate]");
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         return new Book(name, author, LocalDate.parse(publishDate, formatter));
