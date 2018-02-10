@@ -1,6 +1,8 @@
 package com.turbulence6th.model;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 public class Book {
 
@@ -12,6 +14,8 @@ public class Book {
 	
 	private LocalDate publishDate;
 	
+	private Map<String, List<String>> errors;
+
 	public Book() {
 		
 	}
@@ -62,6 +66,14 @@ public class Book {
 
 	public void setPublishDate(LocalDate publishDate) {
 		this.publishDate = publishDate;
+	}
+	
+	public Map<String, List<String>> getErrors() {
+		return errors;
+	}
+
+	public void setErrors(Map<String, List<String>> errors) {
+		this.errors = errors;
 	}
 	
 }

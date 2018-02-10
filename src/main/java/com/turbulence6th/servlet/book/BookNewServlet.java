@@ -1,6 +1,8 @@
 package com.turbulence6th.servlet.book;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.turbulence6th.model.Book;
+import com.turbulence6th.validator.BookValidator;
 
 @WebServlet("/books/new")
 public class BookNewServlet extends BookServlet {
@@ -20,7 +23,7 @@ public class BookNewServlet extends BookServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Book book = this.requestBook(request);
-		if(this.bookRepository.create(book)) {
+		if(BookValidator.validate(book) && this.bookRepository.create(book)) {
 			response.sendRedirect("/books");
 		}
 		
@@ -33,8 +36,9 @@ public class BookNewServlet extends BookServlet {
 	private Book requestBook(HttpServletRequest request) {
 		String name = request.getParameter("book[name]");
         String author = request.getParameter("book[author]");
-        String publishdate = request.getParameter("book[publishDate]");
-        return new Book(name, author, null);
+        String publishDate = request.getParameter("book[publishDate]");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+        return new Book(name, author, LocalDate.parse(publishDate, formatter));
 	}
 	
 	@Override

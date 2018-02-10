@@ -74,6 +74,27 @@ public class BookRepository {
 		return false;
 	}
 	
+	public boolean delete(Book book) {
+		
+		String sql = "DELETE FROM books WHERE book_id = ?";
+		
+		try (PreparedStatement statement = this.connection.prepareStatement(sql)) {
+			
+			statement.setLong(1, book.getId());
+			
+			System.out.println(statement);
+			
+			statement.execute();
+			
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 	public Book findById(Long id) {
 		
 		String sql = "SELECT * FROM books WHERE book_id = ?";
@@ -87,8 +108,11 @@ public class BookRepository {
 			try(ResultSet resultSet = statement.executeQuery()) {
 				
 				if (resultSet.next()) {
-					return new Book(resultSet.getLong("book_id"), resultSet.getString("name"),
-							resultSet.getString("author"), null);
+					Timestamp timestamp = resultSet.getTimestamp("publish_date");
+					return new Book(resultSet.getLong("book_id"), 
+							resultSet.getString("name"),
+							resultSet.getString("author"), 
+							timestamp != null ? timestamp.toLocalDateTime().toLocalDate() : null);
 				}
 				
 			}
@@ -111,8 +135,11 @@ public class BookRepository {
 			
 			List<Book> books = new ArrayList<>();
 			while (resultSet.next()) {
-				books.add(new Book(resultSet.getLong("book_id"), resultSet.getString("name"),
-						resultSet.getString("author"), null));
+				Timestamp timestamp = resultSet.getTimestamp("publish_date");
+				books.add(new Book(resultSet.getLong("book_id"), 
+						resultSet.getString("name"),
+						resultSet.getString("author"), 
+						timestamp != null ? timestamp.toLocalDateTime().toLocalDate() : null));
 			}
 			
 			return books;

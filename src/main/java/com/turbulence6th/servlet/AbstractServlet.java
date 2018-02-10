@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 public abstract class AbstractServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = -4853114904937995071L;
@@ -17,7 +19,9 @@ public abstract class AbstractServlet extends HttpServlet {
 	
 	protected Properties applicationProperties;
 	
-	abstract protected String view();
+	protected Gson gson;
+	
+	protected abstract String view();
 	
 	protected String title() {
 		return "Library";
@@ -28,6 +32,7 @@ public abstract class AbstractServlet extends HttpServlet {
 		super.init();
 		this.context = this.getServletContext();
 		this.applicationProperties = (Properties) this.context.getAttribute("applicationProperties");
+		this.gson = (Gson) this.context.getAttribute("gson");
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,6 +40,14 @@ public abstract class AbstractServlet extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.forward(request, response);
+	}
+	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		this.forward(request, response);
+	}
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		this.forward(request, response);
 	}
 	
