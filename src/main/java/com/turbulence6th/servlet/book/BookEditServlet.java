@@ -77,9 +77,9 @@ public class BookEditServlet extends BookServlet {
 	private Book requestBook(HttpServletRequest request) {
 		String[] pathParts = request.getRequestURI().split("/");
 
-		if (pathParts.length == 3) {
+		if (pathParts.length == 4) {
 
-			Long id = Long.valueOf(pathParts[2]);
+			Long id = Long.valueOf(pathParts[3]);
 
 			Book book = this.bookRepository.findById(id);
 
