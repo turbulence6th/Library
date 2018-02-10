@@ -16,6 +16,8 @@
 		<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap/bootstrap-theme.min.css"></link>
 		<link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap/date-picker/bootstrap.date-picker.min.css"></link>
 		
+		<link rel="stylesheet" type="text/css" href="/stylesheets/pretty/pretty.css"></link>
+		
 		<link rel="stylesheet" type="text/css" href="/stylesheets/library.css"></link>
 		
 		<script type="text/javascript" src="/javascripts/jquery/jquery-3.2.0.min.js"></script>
@@ -26,6 +28,7 @@
 		<script type="text/javascript" src="/javascripts/bootstrap/bootstrap.min.js"></script>
 		<script type="text/javascript" src="/javascripts/bootstrap/date-picker/bootstrap.date-picker.min.js"></script>
 		
+		<script type="text/javascript" src="/javascripts/pretty/pretty.js"></script>
 		
 	</head>
 	<body>

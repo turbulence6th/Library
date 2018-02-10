@@ -1,4 +1,4 @@
-package com.turbulence6th.servlet.book;
+package com.turbulence6th.api.servlet.book;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -9,16 +9,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.JsonObject;
 import com.turbulence6th.model.Book;
 import com.turbulence6th.validator.BookValidator;
 
-@WebServlet("/pages/books/*")
-public class BookEditServlet extends BookServlet {
+@WebServlet("/pages/api/books/*")
+public class BookEditApiServlet extends BookApiServlet {
 
-	private static final long serialVersionUID = -9037745287739869520L;
+	private static final long serialVersionUID = -6260819167197289437L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Book book = requestBook(request);
 		if (book == null) {
@@ -26,35 +27,48 @@ public class BookEditServlet extends BookServlet {
 		}
 
 		else {
-			request.setAttribute("book", book);
-			this.forward(request, response);
+			JsonObject jsonResponse = new JsonObject();
+			if (BookValidator.validate(book) && this.bookRepository.update(book)) {
+				jsonResponse.addProperty("success", true);
+			}
+
+			else {
+				jsonResponse.addProperty("success", false);
+				jsonResponse.add("errors", gson.toJsonTree(book.getErrors()));
+			}
+
+			this.print(response, jsonResponse);
 		}
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Book book = requestBook(request);
 		if (book == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-		}
-
-		else if (BookValidator.validate(book) && this.bookRepository.update(book)) {
-			response.sendRedirect("/books");
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
 		}
 
 		else {
-			request.setAttribute("book", book);
-			this.forward(request, response);
+			JsonObject jsonResponse = new JsonObject();
+			if (this.bookRepository.delete(book)) {
+				jsonResponse.addProperty("success", true);
+			}
+
+			else {
+				jsonResponse.addProperty("success", false);
+			}
+
+			print(response, jsonResponse);
 		}
 	}
 
 	private Book requestBook(HttpServletRequest request) {
 		String[] pathParts = request.getRequestURI().split("/");
 
-		if (pathParts.length == 4) {
+		if (pathParts.length == 5) {
 
-			Long id = Long.valueOf(pathParts[3]);
+			Long id = Long.valueOf(pathParts[4]);
 
 			Book book = this.bookRepository.findById(id);
 
@@ -73,16 +87,6 @@ public class BookEditServlet extends BookServlet {
 		}
 
 		return null;
-	}
-
-	@Override
-	protected String title() {
-		return "Edit Book";
-	}
-
-	@Override
-	protected String view() {
-		return super.view() + "/edit.jsp";
 	}
 
 }
