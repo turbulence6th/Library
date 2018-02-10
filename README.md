@@ -50,7 +50,7 @@
 		</code>
   	</li>
   	<li class="list-group-item">
-  		Edit a book: PUT <a href="https://library-turbulence6th.herokuapp.com/api/books/%book_id%">books/%book_id%</a>
+  		Edit a book: PUT <a href="https://library-turbulence6th.herokuapp.com/api/books/%book_id%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   			<li><b>book[name] <i>(REQ_PARAM)</i>:</b> name of the book</li>
