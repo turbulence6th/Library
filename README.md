@@ -71,7 +71,8 @@
 	        	"errors": <i>(Object)</i> {
 	        		"name": <i>(Array[String])</i> ["name_error", ...],
 	        		"author": <i>(Array[String])</i> ["author_error", ...],
-	        		"publishDate": <i>(Array[String])</i> ["publish_date_error", ...]
+	        		"publishDate": <i>(Array[String])</i> ["publish_date_error", ...],
+	        		"message": <i>(String)</i> "error_message"
 	        	}
 		    }
 		</code>
