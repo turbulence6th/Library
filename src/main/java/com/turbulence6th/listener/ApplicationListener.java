@@ -1,6 +1,8 @@
 package com.turbulence6th.listener;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -68,10 +70,25 @@ public class ApplicationListener implements ServletContextListener {
 	private void initializeConnection() {
 		try {
 			Class.forName("org.postgresql.Driver");
-			this.connection = DriverManager.getConnection(applicationProperties.getProperty("jdbc.connection"),
-					applicationProperties.getProperty("jdbc.username"),
-					applicationProperties.getProperty("jdbc.password"));
-		} catch (ClassNotFoundException | SQLException e) {
+			
+			String databaseUrl = System.getenv("DATABASE_URL");
+			if(databaseUrl != null) {
+				URI dbUri = new URI(databaseUrl);
+
+				String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+			    String username = dbUri.getUserInfo().split(":")[0];
+			    String password = dbUri.getUserInfo().split(":")[1];
+			    
+			    this.connection = DriverManager.getConnection(dbUrl, username, password);
+			}
+			
+			else {
+				this.connection = DriverManager.getConnection(applicationProperties.getProperty("jdbc.connection"),
+						applicationProperties.getProperty("jdbc.username"),
+						applicationProperties.getProperty("jdbc.password"));
+			}
+			
+		} catch (ClassNotFoundException | SQLException | URISyntaxException e) {
 			e.printStackTrace();
 		}
 	}
