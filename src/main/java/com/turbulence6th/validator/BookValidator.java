@@ -16,8 +16,8 @@ public class BookValidator {
 		
 		String name = book.getName();
 		
-		if (!Pattern.matches("([a-zA-Z0-9'-]|\\s)*", name)) {
-			errors.merge("name", createList("Use alpha numeric characters , (') or (-)"), BookValidator::mergeList);
+		if (!Pattern.matches("([a-zA-Z0-9'-:]|\\s)*", name)) {
+			errors.merge("name", createList("Use alpha numeric characters , (') (-) or (:)"), BookValidator::mergeList);
 		}
 		
 		if(name.length() < 3 || name.length() > 25) {
