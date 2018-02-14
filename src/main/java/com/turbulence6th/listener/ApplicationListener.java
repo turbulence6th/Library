@@ -7,8 +7,10 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -21,6 +23,7 @@ import javax.websocket.Session;
 import com.google.gson.Gson;
 import com.turbulence6th.repository.BookRepository;
 import com.turbulence6th.repository.MigrationRepository;
+import com.turbulence6th.repository.RepositoryFactory;
 
 @WebListener
 public class ApplicationListener implements ServletContextListener {
@@ -68,12 +71,13 @@ public class ApplicationListener implements ServletContextListener {
 		URL migrationUrl = ApplicationListener.class.getClassLoader().getResource("sql");
 		migrationRepository.runMigrations(migrationUrl);
 		
-		context.setAttribute("bookRepository", new BookRepository(this.connection));
+		RepositoryFactory repositoryFactory = new RepositoryFactory(this.connection);
+		context.setAttribute("bookRepository", repositoryFactory.get(BookRepository.class));
 
 		context.setAttribute("gson", new Gson());
 		
-		HashMap<String, Set<Session>> webSocketSessionMap = new HashMap<>();
-		webSocketSessionMap.put("/books", new HashSet<>());
+		Map<String, Set<Session>> webSocketSessionMap = Collections.synchronizedMap(new HashMap<>());
+		webSocketSessionMap.put("/books", Collections.synchronizedSet(new HashSet<>()));
 		context.setAttribute("webSocketSessionMap", webSocketSessionMap);
 	}
 	

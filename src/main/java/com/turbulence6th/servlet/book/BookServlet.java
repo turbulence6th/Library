@@ -36,7 +36,7 @@ public abstract class BookServlet extends AbstractServlet implements BookBroadca
 		 */
 		if(request.getMethod().equals("GET") && pathParts.length == 4) {
 			Long id = Long.valueOf(pathParts[3]);
-			Book book = this.bookRepository.findById(id);
+			Book book = this.bookRepository.findBy("book_id", id);
 			return book;
 		}
 		
@@ -56,7 +56,7 @@ public abstract class BookServlet extends AbstractServlet implements BookBroadca
 		 */
 		else if(request.getMethod().equals("GET") && pathParts.length == 5) {
 			Long id = Long.valueOf(pathParts[4]);
-			Book book = this.bookRepository.findById(id);
+			Book book = this.bookRepository.findBy("book_id", id);
 			return book;
 		}
 		
@@ -65,7 +65,7 @@ public abstract class BookServlet extends AbstractServlet implements BookBroadca
 		 */
 		else if (request.getMethod().equals("POST") && pathParts.length == 5) {
 			Long id = Long.valueOf(pathParts[4]);
-			Book book = this.bookRepository.findById(id);
+			Book book = this.bookRepository.findBy("book_id", id);
 
 			String name = request.getParameter("book[name]").trim().replaceAll(" +", " ");
 			String author = request.getParameter("book[author]").trim().replaceAll(" +", " ");

@@ -13,6 +13,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.Set;
+import java.util.TreeSet;
+
+import com.turbulence6th.model.Migration;
 
 public class MigrationRepository {
 
@@ -67,23 +71,28 @@ public class MigrationRepository {
 	public void runMigrations(URL url) {
 		try {
 			DirectoryStream<Path> directoryStream = Files.newDirectoryStream(Paths.get(url.toURI()));
+			Set<Migration> migrations = new TreeSet<>();
 			for(Path path: directoryStream) {
 				String filename = path.getFileName().toString();
-				int underscoreIndex = filename.lastIndexOf('_');
+				int underscoreIndex = filename.indexOf('_');
 				int dotIndex = filename.lastIndexOf('.');
-				String name = filename.substring(0, underscoreIndex);
-				int migrationId = Integer.parseInt(filename.substring(underscoreIndex + 1, dotIndex));
+				Long migrationId = Long.valueOf(filename.substring(0, underscoreIndex));
+				String name = filename.substring(underscoreIndex + 1, dotIndex);
 				
 				if(!checkMigrationExists(migrationId)) {
-					String[] migrations = new String(Files.readAllBytes(path)).trim().split(";");
-					boolean success = true;
-					for(String sql: migrations) {
-						success = success && migrate(sql);
-					}
-					
-					if(success) {
-						registerMigration(migrationId, name);
-					}
+					migrations.add(new Migration(migrationId, name, path));
+				}
+			}
+			
+			for(Migration migration: migrations) {
+				String[] subMigrations = new String(Files.readAllBytes(migration.getPath())).trim().split(";");
+				boolean success = true;
+				for(String sql: subMigrations) {
+					success = success && migrate(sql);
+				}
+				
+				if(success) {
+					registerMigration(migration);
 				}
 			}
 		} catch (URISyntaxException | IOException e) {
@@ -91,12 +100,12 @@ public class MigrationRepository {
 		}
 	}
 	
-	private boolean checkMigrationExists(int migrationId) {
+	private boolean checkMigrationExists(Long migrationId) {
 		String sql = "SELECT 1 FROM migrations WHERE migration_id = ? LIMIT 1";
 		
 		try(PreparedStatement statement = this.connection.prepareStatement(sql)) {
 			
-			statement.setInt(1, migrationId);
+			statement.setLong(1, migrationId);
 			
 			System.out.println(statement);
 			
@@ -129,12 +138,12 @@ public class MigrationRepository {
 		return false;
 	}
 	
-	private void registerMigration(int migrationId, String name) {
+	private void registerMigration(Migration migration) {
 		String sql = "INSERT INTO migrations (migration_id, name, created_at) VALUES (?, ?, ?)";
 		try (PreparedStatement statement = this.connection.prepareStatement(sql)) {
 			
-			statement.setInt(1, migrationId);
-			statement.setString(2, name);
+			statement.setLong(1, migration.getId());
+			statement.setString(2, migration.getName());
 			statement.setObject(3, LocalDateTime.now());
 			
 			System.out.println(statement);

@@ -23,6 +23,8 @@ public class WebSocket {
 	
 	private Map<String, Set<Session>> webSocketSessionMap;
 	
+	private String pathname;
+	
 	@SuppressWarnings("unchecked")
 	@OnOpen
 	public void handleOpen(Session session, EndpointConfig config) throws IOException {
@@ -33,16 +35,15 @@ public class WebSocket {
 	@OnMessage
 	public void handleMessage(Session session, String message) {
 		JsonObject jsonMessage = new JsonParser().parse(message).getAsJsonObject();
-		String pathname = jsonMessage.get("pathname").getAsString();
+		this.pathname = jsonMessage.get("pathname").getAsString();
 		Set<Session> set = this.webSocketSessionMap.get(pathname);
 		set.add(session);
 	}
 
 	@OnClose
 	public void handleClose(Session session) {
-		for(String pathname: this.webSocketSessionMap.keySet()) {
-			Set<Session> sessionSet = this.webSocketSessionMap.get(pathname);
-			sessionSet.remove(session);
+		if(this.pathname != null && this.webSocketSessionMap.containsKey(this.pathname)) {
+			this.webSocketSessionMap.get(this.pathname).remove(session);
 		}
 	}
 

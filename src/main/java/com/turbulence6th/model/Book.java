@@ -36,11 +36,6 @@ public class Book extends Model {
 		this(name, author, publishDate);
 		this.id = id;
 	}
-	
-	@Override
-	public String toString() {
-		return String.format("Book[id: %d, name: %s, author: %s, publishDate: %s]", this.id, this.name, this.author, this.publishDate);
-	}
 
 	public Long getId() {
 		return id;
