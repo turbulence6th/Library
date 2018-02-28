@@ -1,27 +1,27 @@
 <h1>Web Content</h1>
 
 <ul class="list-group">
-	<li class="list-group-item">List all books: <a href="https://library-turbulence6th.herokuapp.com/books">/books</a></li>
+	<li class="list-group-item">List all books: <a href="http://library.turbulence6th.com/books">/books</a></li>
 	<li class="list-group-item">
-  		Get a book: <a href="https://library-turbulence6th.herokuapp.com/books/%BOOK_ID%">/books/%book_id%</a>
+  		Get a book: <a href="http://library.turbulence6th.com/books/%BOOK_ID%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   		</ul>
   	</li>
-  	<li class="list-group-item">Add a new book: <a href="https://library-turbulence6th.herokuapp.com/books/new">/books/new</a></li>
+  	<li class="list-group-item">Add a new book: <a href="http://library.turbulence6th.com/books/new">/books/new</a></li>
   	<li class="list-group-item">
-  		Edit a book: <a href="https://library-turbulence6th.herokuapp.com/books/edit/%BOOK_ID%">/books/%book_id%</a>
+  		Edit a book: <a href="http://library.turbulence6th.com/books/edit/%BOOK_ID%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   		</ul>
   	</li>
-  	<li class="list-group-item">Delete a book: <a href="https://library-turbulence6th.herokuapp.com/books">/books</a></li>
+  	<li class="list-group-item">Delete a book: <a href="http://library.turbulence6th.com/books">/books</a></li>
 </ul>
 
 <h1>Api</h1>
 <ul class="list-group">
 	<li class="list-group-item">
-		List all books: GET <a href="https://library-turbulence6th.herokuapp.com/api/books">/books</a><br>
+		List all books: GET <a href="http://library.turbulence6th.com/api/books">/books</a><br>
 		<code class="prettyprint">
 			[
 		        {
@@ -38,7 +38,7 @@
 		</code>
 	</li>
 	<li class="list-group-item">
-  		Get a book: GET <a href="https://library-turbulence6th.herokuapp.com/api/books/%book_id%">/books/%book_id%</a>
+  		Get a book: GET <a href="http://library.turbulence6th.com/api/books/%book_id%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   		</ul>
@@ -59,7 +59,7 @@
 		</code>
   	</li>
   	<li class="list-group-item">
-  		Add a new book: POST <a href="https://library-turbulence6th.herokuapp.com/api/books/new">/books/new</a>
+  		Add a new book: POST <a href="http://library.turbulence6th.com/api/books/new">/books/new</a>
   		<ul>
   			<li><b>book[name] <i>(REQ_PARAM)</i>:</b> name of the book</li>
   			<li><b>book[author] <i>(REQ_PARAM)</i></b> author of the book</li>
@@ -78,7 +78,7 @@
 		</code>
   	</li>
   	<li class="list-group-item">
-  		Edit a book: PUT <a href="https://library-turbulence6th.herokuapp.com/api/books/edit/%book_id%">/books/%book_id%</a>
+  		Edit a book: PUT <a href="http://library.turbulence6th.com/api/books/edit/%book_id%">/books/%book_id%</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   			<li><b>book[name] <i>(REQ_PARAM)</i>:</b> name of the book</li>
@@ -98,7 +98,7 @@
 		</code>
   	</li>
   	<li class="list-group-item">
-  		Delete a book: DELETE <a href="https://library-turbulence6th.herokuapp.com/api/books/delete/%book_id%">/books</a>
+  		Delete a book: DELETE <a href="http://library.turbulence6th.com/api/books/delete/%book_id%">/books</a>
   		<ul>
   			<li><b>book_id <i>(PATH_PARAM)</i>:</b> id of the book</li>
   		</ul>
@@ -111,4 +111,4 @@
   	</li>
 </ul>
 
-<b>Served at: </b><a href="https://library-turbulence6th.herokuapp.com/">https://library-turbulence6th.herokuapp.com/</a>
+<b>Served at: </b><a href="http://library.turbulence6th.com">http://library.turbulence6th.com</a>
